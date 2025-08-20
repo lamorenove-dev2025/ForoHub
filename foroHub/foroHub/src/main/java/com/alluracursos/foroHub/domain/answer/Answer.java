@@ -1,0 +1,35 @@
+package com.alluracursos.foroHub.domain.answer;
+
+import com.alluracursos.foroHub.domain.topic.Topic;
+import com.alluracursos.foroHub.domain.user.User;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Entity(name = "Answer")
+@Table(name = "answers")
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
+@Setter
+@Getter
+public class Answer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String message;
+
+    @ManyToOne
+    private Topic topic;
+    @Column(name = "fechaCreacion")
+    private LocalDateTime creationDate = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "autor")
+    private User author = new User();
+    private Boolean isSolution = false;
+}
